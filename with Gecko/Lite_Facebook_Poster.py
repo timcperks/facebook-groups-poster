@@ -30,7 +30,7 @@ images = []
 
 def refreshUsers() :
     '''
-    جمع أسماء الحسابات من الملف
+    get users 
     '''
     global login
     login = []
@@ -39,14 +39,14 @@ def refreshUsers() :
         for line in txt :
             login.append(line.split(','))
 
-    # طباعة المستخدمين المتواجدين
-    print('المستخدمين المتوفرين')
+    # printing all users 
+    print('All users : ')
     for i in range(len(login)) :
         print(i, login[i][0])
         
 def selectUser() :
     '''
-    إختيار الحساب الذي سيتم إستخدامه
+    select the acc you want to use 
     '''
     global user_acc, login
     if len(login) :
@@ -63,7 +63,7 @@ def selectUser() :
             
 def urlUpdate(urlFile='') :
     '''
-    تحديد ملف روابط المجموعات
+    select groups file 
     '''
     if(len(urlFile) == 0) :
         urlFile = 'liteURL'
@@ -80,10 +80,9 @@ def urlUpdate(urlFile='') :
 
 def msgUpdate(msgFile='') :
     '''
-    تحديد الرسالة
+    select msg file 
     '''
-    # تحديد ملف الرسالة
-    #msgFile = input('إكتب إسم ملف الرسالة (Text)')
+    #msgFile = input('write message file name (Text)')
     if(len(msgFile) == 0) :
         msgFile = 'Text'
 
@@ -97,10 +96,9 @@ def msgUpdate(msgFile='') :
 
 def imgUpdate(folder = '') :
     '''
-    تحديد مجلد الصور
+    select img file
     '''
-    # تحديد مجلد الصور
-    #imgFolder = input('إكتب إسم مجلد الصور (images)')
+    #imgFolder = input('write img file name (images)')
 
     if(len(folder) == 0) :
         folder = 'images'
@@ -119,7 +117,6 @@ def connect(headless=0) :
     # Select users
     refreshUsers()
     selectUser()
-    # Create Chrome Option object
     
     #options = webdriver.FirefoxOptions()
 
@@ -153,9 +150,9 @@ def connect(headless=0) :
         driver.find_element_by_name('pass').send_keys(login[user_acc][2], Keys.ENTER)
 
         # This will give you some time to prepare the browser
-        print("تم تسجيل الدخول بنجاح - أرسل أي شيء للإستكمال")
+        print("User logged in successfully, press any key to continue")
     else :
-        print("الرجاء تسجيل الدخول يدوياً")
+        print("please login manually")
 
 def updateAll(msg, img, url='') :
     urlUpdate(url)
@@ -164,7 +161,7 @@ def updateAll(msg, img, url='') :
 
 def writePost(group) :
     '''
-    نشر في مجموعة
+    post to group using Keys 
     '''
     global driver, images, msg, imgFolder, error_url
 
@@ -220,7 +217,7 @@ def writePost(group) :
 
 def writePostPaste(group) :
     '''
-    نشر في مجموعة
+    post to group using Copy Paste 
     '''
     global driver, images, msg, imgFolder, error_url
 
@@ -280,7 +277,7 @@ def writeError() :
     print('Urls with errors has been written to error.ebd3')
 
 def writePostToGroups(groups=groups, method=writePost, stop=True) :
-    print('سيبدأ النشر الجماعي - بعد النشر في أول مجموعة يمكنك مراجعة المنشور قبل إكمال النشر في باقس المجموعات')
+    print('bulk share will start >>> after the first post sharing you can modify the post ')
     progress = 0
     global error_url
     for group in groups :
